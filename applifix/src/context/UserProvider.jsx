@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import UserContext from "./UserContext";
 
 const UserProvider = ({ children }) => {
-  const [auth, setAuth] = useState(() => {
-    const storedAuth = JSON.parse(localStorage.getItem("isActive"));
-    return storedAuth ? !!storedAuth.auth : false;
-  });
+  // We start auth as false so that on "first entry" or refresh, 
+  // the user is not automatically logged in.
+  const [auth, setAuth] = useState(false);
 
   return (
     <UserContext.Provider value={{ auth, setAuth }}>
