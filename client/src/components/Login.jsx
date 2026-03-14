@@ -11,24 +11,34 @@ const Login = () => {
     setLogindata({ ...logindata, [e.target.name]: e.target.value });
   };
 
-  const handlelogin = (e) => {
+  const handlelogin = async (e) => {
     e.preventDefault();
-    const users = JSON.parse(localStorage.getItem("formdata")) || [];
-    const user = users.find((u) => u.email === logindata.email);
 
-    if (!user) {
-      alert("User not found");
-      return;
-    }
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(logindata),
+      });
 
-    if (user.password === logindata.password) {
-      setLogindata({ email: "", password: "" });
-      localStorage.setItem("isActive", JSON.stringify({ auth: true }));
-      localStorage.setItem("currentUser", JSON.stringify(user));
-      setAuth(true);
-      navigate("/cards");
-    } else {
-      alert("Invalid password");
+      const data = await response.json();
+
+      if (response.ok) {
+        setLogindata({ email: "", password: "" });
+        localStorage.setItem("isActive", JSON.stringify({ auth: true }));
+        localStorage.setItem("currentUser", JSON.stringify(data.user));
+        setAuth(true);
+        if (data.user.role === 'admin') {
+          navigate("/admin");
+        } else {
+          navigate("/cards");
+        }
+      } else {
+        alert(data.msg || "Login failed");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      alert("An error occurred. Please try again.");
     }
   };
 
@@ -43,15 +53,6 @@ const Login = () => {
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 tracking-tight">
           Welcome Back
         </h2>
-        <p className="mt-2 text-center text-sm text-gray-600 font-medium">
-          New to Applifix?{' '}
-          <button
-            onClick={() => navigate("/register")}
-            className="text-black hover:text-gray-700 underline underline-offset-4 transition-colors"
-          >
-            Create an account
-          </button>
-        </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -93,26 +94,6 @@ const Login = () => {
               </div>
             </div>
 
-            <div className="flex items-center justify-between px-1">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 text-black focus:ring-black border-gray-300 rounded-lg cursor-pointer"
-                />
-                <label htmlFor="remember-me" className="ml-2.5 block text-sm text-gray-700 font-medium cursor-pointer">
-                  Keep me signed in
-                </label>
-              </div>
-
-              <div className="text-sm">
-                <a href="#" className="font-semibold text-black hover:text-gray-700 transition-colors">
-                  Forgot?
-                </a>
-              </div>
-            </div>
-
             <div>
               <button
                 type="submit"
@@ -121,28 +102,20 @@ const Login = () => {
                 Sign In
               </button>
             </div>
+
+            <div className="text-center mt-6">
+              <p className="text-sm text-gray-600 font-medium">
+                New to Applifix?{' '}
+                <button
+                  type="button"
+                  onClick={() => navigate("/register")}
+                  className="text-black font-bold hover:text-gray-700 underline underline-offset-4 transition-colors"
+                >
+                  Create an account
+                </button>
+              </p>
+            </div>
           </form>
-
-          <div className="mt-10">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-100" />
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-white text-gray-400 font-medium">Quick Access</span>
-              </div>
-            </div>
-
-            <div className="mt-8 grid grid-cols-2 gap-4">
-              {/* Placeholders for Social Logins to look premium */}
-              <button className="w-full inline-flex justify-center py-3 px-4 border border-gray-100 rounded-2xl bg-white text-sm font-semibold text-gray-600 hover:bg-gray-50 shadow-sm transition-all duration-200">
-                Google
-              </button>
-              <button className="w-full inline-flex justify-center py-3 px-4 border border-gray-100 rounded-2xl bg-white text-sm font-semibold text-gray-600 hover:bg-gray-50 shadow-sm transition-all duration-200">
-                Apple
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </div>

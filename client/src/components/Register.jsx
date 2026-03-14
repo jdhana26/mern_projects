@@ -11,7 +11,7 @@ const Register = () => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    const formsubmit = (e) => {
+    const formsubmit = async (e) => {
         e.preventDefault();
 
         if (form.password !== form.repassword) {
@@ -19,14 +19,32 @@ const Register = () => {
             return;
         }
 
-        const storedUsers = JSON.parse(localStorage.getItem("formdata")) || [];
-        storedUsers.push(form);
-        localStorage.setItem("formdata", JSON.stringify(storedUsers));
+        try {
+            const response = await fetch("http://localhost:5000/api/auth/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: form.name,
+                    mobile: form.mobile,
+                    email: form.email,
+                    password: form.password
+                }),
+            });
 
-        toast.success("Account created successfully!");
-        setTimeout(() => {
-            navigate("/login");
-        }, 1500);
+            const data = await response.json();
+
+            if (response.ok) {
+                toast.success("Account created successfully!");
+                setTimeout(() => {
+                    navigate("/login");
+                }, 1500);
+            } else {
+                toast.error(data.msg || "Registration failed");
+            }
+        } catch (error) {
+            console.error("Error during registration:", error);
+            toast.error("An error occurred. Please try again.");
+        }
     };
 
     return (
@@ -60,7 +78,7 @@ const Register = () => {
                                 <input
                                     type="text"
                                     name="name"
-                                    placeholder="John Doe"
+                                    placeholder="Ragu"
                                     required
                                     onChange={handleinput}
                                     className="mt-1 appearance-none block w-full px-4 py-3 border border-gray-200 rounded-2xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-black/10 focus:border-black sm:text-sm transition-all duration-200 bg-gray-50/50 focus:bg-white"
@@ -72,7 +90,7 @@ const Register = () => {
                                 <input
                                     type="tel"
                                     name="mobile"
-                                    placeholder="+1 (555) 000-0000"
+                                    placeholder="987456123"
                                     required
                                     onChange={handleinput}
                                     className="mt-1 appearance-none block w-full px-4 py-3 border border-gray-200 rounded-2xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-black/10 focus:border-black sm:text-sm transition-all duration-200 bg-gray-50/50 focus:bg-white"
@@ -84,7 +102,7 @@ const Register = () => {
                                 <input
                                     type="email"
                                     name="email"
-                                    placeholder="name@example.com"
+                                    placeholder="name@gmail.com"
                                     required
                                     onChange={handleinput}
                                     className="mt-1 appearance-none block w-full px-4 py-3 border border-gray-200 rounded-2xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-black/10 focus:border-black sm:text-sm transition-all duration-200 bg-gray-50/50 focus:bg-white"

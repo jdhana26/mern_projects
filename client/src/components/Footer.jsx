@@ -64,10 +64,10 @@ const Footer = () => {
         <div className='columns-3xs flex flex-col justify-center gap-0.5 '>
 
             <h1 className='font-extrabold'>Support</h1>
-           {support.map(({name, route})=>(
-              <Link className='text-sm  ' name={name} route={route} >
-              {name}</Link>
-           ))}
+            {support.map(({ name, route = "/" }) => (
+              <Link className='text-sm' key={name} to={route}>
+                {name}</Link>
+            ))}
            
     <div className='flex flex-row text-xl gap-2.5 '>
 <FaSquareFacebook />
@@ -83,20 +83,20 @@ const Footer = () => {
           <div className='columns-3xs flex flex-col justify-center gap-0.5 '>
 
             <h1 className='font-extrabold'>Services</h1>
-            {service.map(({name, route})=>(
-              <Link className='text-sm' name={name} route={route} >
-              {name}</Link>
-           ))}
+            {service.map(({ name, route = "/" }) => (
+              <Link className='text-sm' key={name} to={route}>
+                {name}</Link>
+            ))}
            
         </div>
 
           <div className='columns-3xs flex flex-col justify-center mb-7 gap-0.5'>
 
             <h1 className='font-extrabold'>Company</h1>
-            {company.map(({name, route})=>(
-              <Link className='text-sm' name={name} route={route} >
-              {name}</Link>
-           ))}
+            {company.map(({ name, route = "/" }) => (
+              <Link className='text-sm' key={name} to={route}>
+                {name}</Link>
+            ))}
            
              
            
@@ -105,10 +105,10 @@ const Footer = () => {
         <div className='columns-3xs flex flex-col justify-center mb-7 gap-0.5'>
 
             <h1 className='font-extrabold'>Legal</h1>
-            {legal.map(({name, route})=>(
-              <Link className='text-sm' name={name} route={route} >
-              {name}</Link>
-           ))}
+            {legal.map(({ name, route = "/" }) => (
+              <Link className='text-sm' key={name} to={route}>
+                {name}</Link>
+            ))}
            
         </div>
 

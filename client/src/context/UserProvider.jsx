@@ -2,9 +2,18 @@ import React, { useState } from "react";
 import UserContext from "./UserContext";
 
 const UserProvider = ({ children }) => {
-  // We start auth as false so that on "first entry" or refresh, 
-  // the user is not automatically logged in.
-  const [auth, setAuth] = useState(false);
+  // Authentication state with localStorage persistence
+  const [auth, setAuth] = useState(() => {
+    try {
+      const active = localStorage.getItem("isActive");
+      if (!active) return false;
+      const parsed = JSON.parse(active);
+      return !!parsed?.auth;
+    } catch (e) {
+      console.error("Auth initialization error:", e);
+      return false;
+    }
+  });
 
   return (
     <UserContext.Provider value={{ auth, setAuth }}>

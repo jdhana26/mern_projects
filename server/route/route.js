@@ -1,20 +1,17 @@
 import express from 'express';
-import { userdata, servicedata } from '../controllers/controller.js';
- 
+import { registerUser, loginUser, submitEnquiry, getAllUsers, getAllEnquiries } from '../controllers/controller.js';
 
+const route = express.Router()
 
-const route =express.Router()
+// Auth
+route.post("/auth/register", registerUser)
+route.post("/auth/login", loginUser)
 
+// Enquiry
+route.post("/enquiry", submitEnquiry)
 
-route.post("/data",userdata)
-
-//service data
-route.post("/service",servicedata)
-
+// Admin
+route.get("/admin/users", getAllUsers)
+route.get("/admin/enquiries", getAllEnquiries)
 
 export default route
-
-
-// http://localhost:5000/api/user/data
-
-// http://localhost:5000/api/user/service

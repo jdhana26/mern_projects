@@ -1,7 +1,4 @@
-import tv from '../assets/tv.png'
-import wm from '../assets/wm.png'
-import heater from '../assets/heater.png'
-import ac from '../assets/ac.png'
+
 import  bosch from "../assets/bosch.png"
 import wp from "../assets/wp.png"
 import sm from "../assets/sm.png"
