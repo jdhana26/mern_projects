@@ -74,7 +74,7 @@ const Cards = () => {
 
   return (
     <>
-      <div className='grid grid-cols-5 gap-6 p-10 bg-gray-200'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 p-4 md:p-10 bg-gray-200'>
         {list.map((e, i) => (
           <div key={i} className='bg-white p-10 flex flex-col rounded-2xl shadow-lg'>
             <img src={e.img} alt="" />
@@ -107,7 +107,7 @@ const Cards = () => {
         >
 
           <div
-            className="bg-white w-[600px] rounded-xl p-6 relative flex gap-6"
+            className="bg-white w-[95%] sm:w-[600px] rounded-2xl p-4 sm:p-6 relative flex flex-col sm:flex-row gap-6 max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
 
@@ -120,13 +120,13 @@ const Cards = () => {
             </button>
 
             {/* LEFT SIDE IMAGE */}
-            <div className="w-1/2 flex flex-col items-center">
-              <img src={selectedProduct.img} alt="" className="w-40" />
-              <h2 className="font-bold mt-3">{selectedProduct.name}</h2>
+            <div className="w-full sm:w-1/2 flex flex-col items-center">
+              <img src={selectedProduct.img} alt="" className="w-32 sm:w-40" />
+              <h2 className="font-bold mt-3 text-center">{selectedProduct.name}</h2>
             </div>
 
             {/* RIGHT SIDE FORM */}
-            <div className="w-1/2">
+            <div className="w-full sm:w-1/2">
   <h3 className="text-xl font-semibold mb-4 text-gray-800">
     Book Service
   </h3>

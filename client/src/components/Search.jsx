@@ -3,76 +3,66 @@ import worker from '../assets/worker1.jpg'
 import { GiTv } from "react-icons/gi";
 import { GiWashingMachine } from "react-icons/gi";
 import { TbFridge } from "react-icons/tb";
-import { LuHeater } from "react-icons/lu";
 import { TbAirConditioning } from "react-icons/tb";
 import { MdOutlineMicrowave } from "react-icons/md";
 
 const Search = () => {
   return (
-    <>
-    <div className=' text-black mt-5 columns-2 pr-10 pl-20 flex-row gap-15 '>
-    
-    
-    <div className='  '>
-      <img src={worker} alt="" className='w-300  border-2 rounded-2xl'/>
+    <div className='text-black mt-10 px-6 sm:px-10 lg:px-20 flex flex-col lg:flex-row gap-10 lg:gap-20 items-center lg:items-start mb-16'>
+      {/* Left side Image */}
+      <div className='w-full lg:w-1/2'>
+        <img 
+          src={worker} 
+          alt="Technical Worker" 
+          className='w-full border-2 rounded-3xl shadow-2xl shadow-gray-200 object-cover'
+        />
+      </div>
+
+      {/* Right side Services List */}
+      <div className='w-full lg:w-1/2'>
+        <h1 className='font-black text-3xl sm:text-5xl lg:mt-10 mb-8 sm:mb-16 text-center lg:text-left tracking-tighter'>
+          Our Services
+        </h1>
+        
+        <div className='grid grid-cols-2 sm:grid-cols-3 gap-8 sm:gap-16 justify-items-center'>
+          <div className="flex flex-col items-center group cursor-pointer">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gray-50 rounded-2xl flex items-center justify-center shadow-md group-hover:bg-black group-hover:text-white transition-all duration-300">
+              <GiTv className='text-3xl sm:text-4xl'/>
+            </div>
+            <p className='mt-3 font-extrabold text-sm sm:text-base'>TV</p>
+          </div>
+
+          <div className="flex flex-col items-center group cursor-pointer">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gray-50 rounded-2xl flex items-center justify-center shadow-md group-hover:bg-black group-hover:text-white transition-all duration-300">
+              <GiWashingMachine className='text-3xl sm:text-4xl'/>
+            </div>
+            <p className='mt-3 font-extrabold text-sm sm:text-base text-center'>Washing Machine</p>
+          </div>
+
+          <div className="flex flex-col items-center group cursor-pointer">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gray-50 rounded-2xl flex items-center justify-center shadow-md group-hover:bg-black group-hover:text-white transition-all duration-300">
+              <TbFridge className='text-3xl sm:text-4xl'/>
+            </div>
+            <p className='mt-3 font-extrabold text-sm sm:text-base'>Fridge</p>
+          </div>
+
+          <div className="flex flex-col items-center group cursor-pointer">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gray-50 rounded-2xl flex items-center justify-center shadow-md group-hover:bg-black group-hover:text-white transition-all duration-300">
+              <MdOutlineMicrowave className='text-3xl sm:text-4xl'/>
+            </div>
+            <p className='mt-3 font-extrabold text-sm sm:text-base text-center'>Microwave</p>
+          </div>
+
+          <div className="flex flex-col items-center group cursor-pointer">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gray-50 rounded-2xl flex items-center justify-center shadow-md group-hover:bg-black group-hover:text-white transition-all duration-300">
+              <TbAirConditioning className='text-3xl sm:text-4xl'/>
+            </div>
+            <p className='mt-3 font-extrabold text-sm sm:text-base'>AC</p>
+          </div>
+        </div>
+      </div>
     </div>
-    {/* <div className='pl-10 p-25 pr-4' > */}
-      
-      {/* <ul className='list-disc pl-5 mt-5 text-lg '>
-        <li>Tv</li>
-        <li>Washing Machine</li>
-        <li>Refridgerator</li>
-        <li>Heater</li>
-        <li>AC conditioner</li>
-        <li>Microwave</li>
-      </ul> */}
-      <div className=''>
-        <h1 className='font-extrabold text-3xl mt-20 flex justify-center items-center  '>Our Services</h1>
-        <div className='flex flex-row justify-center items-center text-black gap-30 mt-20'>
-          <div >
-      <GiTv className='w-15 h-15    '/>
-      <p className='ml-5 '>TV</p>
-      </div>
-      <div className='text-black '>
-
-      <GiWashingMachine className='w-15 h-15 ml-7    '/>
-      <p className=' '>Washing Machine</p>
-      </div>
-     <div>
-       <TbFridge className='w-15 h-15      '/>
-      <p className=' ml-2'>Fridge</p>
-      </div>
-      </div>
-
-
-
-      
-       <div  className='flex flex-row justify-center items-center text-black gap-45 mt-23'>
-<div>
-  <MdOutlineMicrowave className='w-15 h-15 ml-6    '/>
-      <p className='ml-4 '>Microwave</p>
-</div>
-       
-<div> 
-       <TbAirConditioning className='w-15 h-15   '/>
-      <p className=' ml-5'>AC</p>
-</div>
-</div>
-      
-
-      {/* </>
-      <LuHeater/>
-      <>
-      <e />
-       */}
-</div>
- 
-</div>
-  
-
-      
-    </>
   )
 }
 
-export default Search 
+export default Search

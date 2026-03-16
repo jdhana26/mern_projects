@@ -69,7 +69,7 @@ const AdminDashboard = () => {
                     </button>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
                     <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 flex items-center justify-between">
                         <div>
                             <p className="text-sm text-gray-500 font-semibold uppercase tracking-wider">Total Users</p>
@@ -96,7 +96,7 @@ const AdminDashboard = () => {
                             <h2 className="text-xl font-bold text-gray-800">Registered Users</h2>
                         </div>
                         <div className="overflow-x-auto">
-                            <table className="min-w-full divide-y divide-gray-200">
+                            <table className="min-w-[800px] md:min-w-full divide-y divide-gray-200">
                                 <thead className="bg-gray-50">
                                     <tr>
                                         <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Name</th>
@@ -137,7 +137,7 @@ const AdminDashboard = () => {
                             <h2 className="text-xl font-bold text-gray-800">Enquiry Submissions</h2>
                         </div>
                         <div className="overflow-x-auto">
-                            <table className="min-w-full divide-y divide-gray-200">
+                            <table className="min-w-[800px] md:min-w-full divide-y divide-gray-200">
                                 <thead className="bg-gray-50">
                                     <tr>
                                         <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Name</th>

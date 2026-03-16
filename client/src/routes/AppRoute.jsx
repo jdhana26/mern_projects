@@ -9,20 +9,30 @@ import AdminDashboard from "../admin/AdminDashboard";
 import About from "../components/About";
 import Contact from "../components/Contact";
 
+import ProtectedRoute from "./ProtectedRoute";
+
 const AppRoute = () => {
   return (
     <UserProvider>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="cards" element={<Cards />} />
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
+          
+          {/* Protected User Route */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="cards" element={<Cards />} />
+          </Route>
         </Route>
 
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
-        <Route path="admin" element={<AdminDashboard />} />
+        
+        {/* Protected Admin Route */}
+        <Route element={<ProtectedRoute requiredRole="admin" />}>
+          <Route path="admin" element={<AdminDashboard />} />
+        </Route>
       </Routes>
     </UserProvider>
 

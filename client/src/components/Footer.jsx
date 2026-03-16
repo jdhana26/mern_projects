@@ -60,8 +60,8 @@ const Footer = () => {
 
   return (
     <>
-    <div className='bg-gray-200  mt-5 flex flex-row justify-between columns-4 p-25'>
-        <div className='columns-3xs flex flex-col justify-center gap-0.5 '>
+    <div className='bg-gray-200 mt-10 p-10 lg:p-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 sm:gap-16'>
+        <div className='flex flex-col gap-3'>
 
             <h1 className='font-extrabold'>Support</h1>
             {support.map(({ name, route = "/" }) => (
@@ -80,7 +80,7 @@ const Footer = () => {
         </div>
 
 
-          <div className='columns-3xs flex flex-col justify-center gap-0.5 '>
+          <div className='flex flex-col gap-3'>
 
             <h1 className='font-extrabold'>Services</h1>
             {service.map(({ name, route = "/" }) => (
@@ -90,7 +90,7 @@ const Footer = () => {
            
         </div>
 
-          <div className='columns-3xs flex flex-col justify-center mb-7 gap-0.5'>
+          <div className='flex flex-col gap-3'>
 
             <h1 className='font-extrabold'>Company</h1>
             {company.map(({ name, route = "/" }) => (
@@ -102,7 +102,7 @@ const Footer = () => {
            
         </div>
 
-        <div className='columns-3xs flex flex-col justify-center mb-7 gap-0.5'>
+        <div className='flex flex-col gap-3'>
 
             <h1 className='font-extrabold'>Legal</h1>
             {legal.map(({ name, route = "/" }) => (
