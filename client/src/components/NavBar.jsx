@@ -82,6 +82,7 @@ const NavBar = () => {
             <NavLink to="/" icon={<FaHome />} label="Home" onClick={handleScrollToTop} />
             <NavLink to="/about" icon={<FaCalendarCheck />} label="About" />
             <NavLink to="/contact" icon={<FaPhoneAlt />} label="Contact" />
+            {auth && <NavLink to="/cards" icon={<FaCalendarCheck />} label="Book a Service" />}
           </div>
 
           <div className="h-6 w-px bg-gray-200 mx-2 lg:block hidden"></div>
