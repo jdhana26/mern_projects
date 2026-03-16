@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import UserContext from '../context/UserContext';
+import api from '../api/axios';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -15,18 +16,14 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(logindata),
-      });
+      const response = await api.post("/auth/login", logindata);
+      const data = response.data;
 
-      const data = await response.json();
-
-      if (response.ok) {
+      if (response.status === 200) {
         setLogindata({ email: "", password: "" });
         localStorage.setItem("isActive", JSON.stringify({ auth: true }));
         localStorage.setItem("currentUser", JSON.stringify(data.user));
+        localStorage.setItem("token", data.token);
         setAuth(true);
         if (data.user.role === 'admin') {
           navigate("/admin");
@@ -38,7 +35,8 @@ const Login = () => {
       }
     } catch (error) {
       console.error("Error during login:", error);
-      alert("An error occurred. Please try again.");
+      const errorMsg = error.response?.data?.msg || "An error occurred. Please try again.";
+      alert(errorMsg);
     }
   };
 

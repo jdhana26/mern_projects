@@ -2,6 +2,7 @@ import Admin from "../models/modelAdmin.js";
 import dataModel from "../models/model.js";
 import serviceModel from "../models/modelService.js";
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 // Register User
 export const registerUser = async(req,res)=>{
@@ -46,30 +47,40 @@ export const loginUser = async(req,res)=>{
 
         // 1. First check Admin collection
         const admin = await Admin.findOne({ email });
+        let loggedUser = null;
+
         if (admin) {
             const isMatch = await bcrypt.compare(password, admin.password);
             if (isMatch) {
-                return res.status(200).json({ 
-                    msg: "Admin Login successful", 
-                    user: { id: admin._id, name: "Administrator", email: admin.email, role: "admin" } 
-                });
+                loggedUser = { id: admin._id, name: "Administrator", email: admin.email, role: "admin" };
             }
         }
 
         // 2. If not admin, check User collection
-        const user = await dataModel.findOne({ email });
-        if (!user) {
-            return res.status(400).json({ msg: "User not found" });
+        if (!loggedUser) {
+            const user = await dataModel.findOne({ email });
+            if (!user) {
+                return res.status(400).json({ msg: "User not found" });
+            }
+
+            const isMatch = await bcrypt.compare(password, user.password);
+            if (!isMatch) {
+                return res.status(400).json({ msg: "Invalid credentials" });
+            }
+            loggedUser = { id: user._id, name: user.name, email: user.email, role: user.role };
         }
 
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(400).json({ msg: "Invalid credentials" });
-        }
+        // Generate JWT
+        const token = jwt.sign(
+            { id: loggedUser.id, role: loggedUser.role },
+            process.env.JWT_SECRET,
+            { expiresIn: '1d' }
+        );
 
         res.status(200).json({ 
-            msg: "Login successful", 
-            user: { id: user._id, name: user.name, email: user.email, role: user.role } 
+            msg: loggedUser.role === 'admin' ? "Admin Login successful" : "Login successful", 
+            user: loggedUser,
+            token 
         });
 
     } catch (error) {

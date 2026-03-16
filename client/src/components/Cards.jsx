@@ -14,6 +14,7 @@ import mixer from '../assets/mixer.png'
 import purifier from '../assets/purifier.png'
 import induction from '../assets/induction.png'
 import ImageSlider from './ImageSlider'
+import api from '../api/axios';
  
 const list = [
   { img: tv, name: "Television" },
@@ -54,15 +55,10 @@ const Cards = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/enquiry", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(enquiryForm),
-      });
+      const response = await api.post("/enquiry", enquiryForm);
+      const data = response.data;
 
-      const data = await response.json();
-
-      if (response.ok) {
+      if (response.status === 200 || response.status === 201) {
         toast.success("Enquiry submitted successfully!");
         setIsOpen(false);
         setEnquiryForm({ name: '', mobile: '', address: '', problem: '' });
@@ -71,7 +67,8 @@ const Cards = () => {
       }
     } catch (error) {
       console.error("Error submitting enquiry:", error);
-      toast.error("An error occurred. Please try again.");
+      const errorMsg = error.response?.data?.msg || "An error occurred. Please try again.";
+      toast.error(errorMsg);
     }
   };
 

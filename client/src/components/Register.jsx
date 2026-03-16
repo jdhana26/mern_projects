@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import api from '../api/axios';
 
 const Register = () => {
     const navigate = useNavigate();
@@ -20,30 +21,25 @@ const Register = () => {
         }
 
         try {
-            const response = await fetch("http://localhost:5000/api/auth/register", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    name: form.name,
-                    mobile: form.mobile,
-                    email: form.email,
-                    password: form.password
-                }),
+            const response = await api.post("/auth/register", {
+                name: form.name,
+                mobile: form.mobile,
+                email: form.email,
+                password: form.password
             });
 
-            const data = await response.json();
-
-            if (response.ok) {
+            if (response.status === 200 || response.status === 201) {
                 toast.success("Account created successfully!");
                 setTimeout(() => {
                     navigate("/login");
                 }, 1500);
             } else {
-                toast.error(data.msg || "Registration failed");
+                toast.error(response.data.msg || "Registration failed");
             }
         } catch (error) {
             console.error("Error during registration:", error);
-            toast.error("An error occurred. Please try again.");
+            const errorMsg = error.response?.data?.msg || "An error occurred. Please try again.";
+            toast.error(errorMsg);
         }
     };
 

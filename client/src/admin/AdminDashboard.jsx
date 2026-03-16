@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import api from '../api/axios';
 
 const AdminDashboard = () => {
     const navigate = useNavigate();
@@ -25,15 +26,13 @@ const AdminDashboard = () => {
                 }
 
                 const [usersRes, enquiriesRes] = await Promise.all([
-                    fetch('http://localhost:5000/api/admin/users'),
-                    fetch('http://localhost:5000/api/admin/enquiries')
+                    api.get('/admin/users'),
+                    api.get('/admin/enquiries')
                 ]);
 
-                if (usersRes.ok && enquiriesRes.ok) {
-                    const usersData = await usersRes.json();
-                    const enquiriesData = await enquiriesRes.json();
-                    setUsers(usersData);
-                    setEnquiries(enquiriesData);
+                if (usersRes.status === 200 && enquiriesRes.status === 200) {
+                    setUsers(usersRes.data);
+                    setEnquiries(enquiriesRes.data);
                 } else {
                     console.error("Failed to fetch admin data");
                 }
