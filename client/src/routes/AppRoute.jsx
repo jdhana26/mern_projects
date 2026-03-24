@@ -20,9 +20,11 @@ const AppRoute = () => {
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
           
+          <Route path="cards" element={<Cards />} />
+          
           {/* Protected User Route */}
           <Route element={<ProtectedRoute />}>
-            <Route path="cards" element={<Cards />} />
+            {/* User-only routes can go here if any */}
           </Route>
         </Route>
 

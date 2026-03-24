@@ -18,7 +18,7 @@ const NavLink = ({ to, icon, label, onClick }) => (
 );
 
 const NavBar = () => {
-  const { auth, setAuth } = useContext(UserContext);
+  const { auth, setAuth, searchTerm, setSearchTerm } = useContext(UserContext);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const navigate = useNavigate();
 
@@ -73,6 +73,8 @@ const NavBar = () => {
           <input
             type="search"
             placeholder="Search products..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full pl-12 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-black focus:bg-white transition-all duration-200 text-sm"
           />
         </div>

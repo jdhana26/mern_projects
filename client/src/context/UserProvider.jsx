@@ -15,8 +15,10 @@ const UserProvider = ({ children }) => {
     }
   });
 
+  const [searchTerm, setSearchTerm] = useState("");
+
   return (
-    <UserContext.Provider value={{ auth, setAuth }}>
+    <UserContext.Provider value={{ auth, setAuth, searchTerm, setSearchTerm }}>
       {children}
     </UserContext.Provider>
   );

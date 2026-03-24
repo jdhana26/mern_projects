@@ -31,7 +31,7 @@ const list = [
 
 const Cards = () => {
   const navigate = useNavigate();
-  const { auth } = useContext(UserContext);
+  const { auth, searchTerm } = useContext(UserContext);
 
   const [isOpen, setIsOpen] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
@@ -72,31 +72,41 @@ const Cards = () => {
     }
   };
 
+  const filteredList = list.filter(item =>
+    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 p-4 md:p-10 bg-gray-200'>
-        {list.map((e, i) => (
+        {filteredList.map((e, i) => (
           <div key={i} className='bg-white p-10 flex flex-col rounded-2xl shadow-lg'>
             <img src={e.img} alt="" />
             <p className='mt-1 font-bold'>{e.name}</p>
 
             <button
               onClick={() => {
-                if (!auth) {
-                  toast.info("Please login to submit an enquiry.");
-                  navigate("/"); // Move to home page as requested
+                const user = localStorage.getItem("user");
+                if (!user) {
+                  toast.info("Please login to book a service.");
+                  navigate("/login"); 
                   return;
                 }
                 setSelectedProduct(e)
                 setIsOpen(true)
               }}
-              className='bg-white text-black border border-black rounded px-3 py-1 mt-2'
+              className='bg-white text-black border border-black rounded px-3 py-1 mt-2 hover:bg-black hover:text-white transition-colors'
             >
-              Enquiry now
+              Book Now
             </button>
 
           </div>
         ))}
+        {filteredList.length === 0 && (
+          <div className="col-span-full text-center py-10 text-gray-500 font-semibold">
+            No services found matching "{searchTerm}"
+          </div>
+        )}
       </div>
 
       {/* Popup Modal */}
