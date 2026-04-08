@@ -18,7 +18,7 @@ const NavLink = ({ to, icon, label, onClick }) => (
 );
 
 const NavBar = () => {
-  const { auth, setAuth, searchTerm, setSearchTerm } = useContext(UserContext);
+  const { auth, setAuth, searchTerm, setSearchTerm, setIsModalOpen, setModalProduct } = useContext(UserContext);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const navigate = useNavigate();
 
@@ -85,7 +85,21 @@ const NavBar = () => {
             <NavLink to="/" icon={<FaHome />} label="Home" onClick={handleScrollToTop} />
             <NavLink to="/about" icon={<FaCalendarCheck />} label="About" />
             <NavLink to="/contact" icon={<FaPhoneAlt />} label="Contact" />
-            {auth && <NavLink to="/cards" icon={<FaCalendarCheck />} label="Book a Service" />}
+            <button
+              onClick={() => {
+                const user = localStorage.getItem("currentUser");
+                if (auth || user) {
+                  navigate("/cards");
+                } else {
+                  setModalProduct(null);
+                  setIsModalOpen(true);
+                }
+              }}
+              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 hover:text-black hover:bg-gray-50 rounded-xl transition-all duration-200"
+            >
+              <span className="text-lg"><FaCalendarCheck /></span>
+              Book a Service
+            </button>
           </div>
 
           <div className="h-6 w-px bg-gray-200 mx-2 hidden md:block"></div>
@@ -138,7 +152,22 @@ const NavBar = () => {
             <NavLink to="/" icon={<FaHome />} label="Home" onClick={(e) => { handleScrollToTop(e); setIsMenuOpen(false); }} />
             <NavLink to="/about" icon={<FaCalendarCheck />} label="About" onClick={() => setIsMenuOpen(false)} />
             <NavLink to="/contact" icon={<FaPhoneAlt />} label="Contact" onClick={() => setIsMenuOpen(false)} />
-            {auth && <NavLink to="/cards" icon={<FaCalendarCheck />} label="Book a Service" onClick={() => setIsMenuOpen(false)} />}
+            <button
+              onClick={() => {
+                setIsMenuOpen(false);
+                const user = localStorage.getItem("currentUser");
+                if (auth || user) {
+                  navigate("/cards");
+                } else {
+                  setModalProduct(null);
+                  setIsModalOpen(true);
+                }
+              }}
+              className="w-full flex items-center justify-start gap-2 px-4 py-2 text-sm font-medium text-gray-600 hover:text-black hover:bg-gray-50 rounded-xl transition-all duration-200"
+            >
+              <span className="text-lg"><FaCalendarCheck /></span>
+              Book a Service
+            </button>
           </div>
           
           <div className="px-4 pt-4 border-t border-gray-100">

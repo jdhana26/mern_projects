@@ -16,9 +16,11 @@ const UserProvider = ({ children }) => {
   });
 
   const [searchTerm, setSearchTerm] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalProduct, setModalProduct] = useState(null);
 
   return (
-    <UserContext.Provider value={{ auth, setAuth, searchTerm, setSearchTerm }}>
+    <UserContext.Provider value={{ auth, setAuth, searchTerm, setSearchTerm, isModalOpen, setIsModalOpen, modalProduct, setModalProduct }}>
       {children}
     </UserContext.Provider>
   );
