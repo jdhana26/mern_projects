@@ -23,8 +23,9 @@ const seedAdmin = async () => {
             console.log('Admin account already exists');
         }
     } catch (error) {
-        console.error('Error seeding admin:', error);
+        console.error("Error seeding admin:", error);
     }
 };
+//for git push
 
 export default seedAdmin;
